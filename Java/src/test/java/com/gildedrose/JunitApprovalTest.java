@@ -39,7 +39,7 @@ public class JunitApprovalTest {
         for (int i = 0; i < days; i++) {
             result.append("-------- day " + i + " --------\n");
             result.append("name, sellIn, quality\n");
-            for (Item item : items) {
+            for (Item item : app.items) {
                 result.append(item).append("\n");
             }
             result.append("\n");
