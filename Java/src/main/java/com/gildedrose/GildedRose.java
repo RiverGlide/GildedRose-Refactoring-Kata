@@ -13,49 +13,49 @@ class GildedRose {
 
             if(isLegendary(item)) { continue; }
 
-            if (!item.name.equals("Aged Brie")
-                    && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (item.quality > 0) {
-                    item.quality = item.quality - 1;
-                }
+            if (degrading(item)) {
+                item.quality = item.quality - 1;
             } else {
-                if (item.quality < 50) {
-                    item.quality = item.quality + 1;
-
-                    if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item.sellIn < 11) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-
-                        if (item.sellIn < 6) {
-                            if (item.quality < 50) {
-                                item.quality = item.quality + 1;
-                            }
-                        }
-                    }
+                item.quality = item.quality + 1;
+                if (backstage(item)) {
+                    if (item.sellIn < 11) { item.quality = item.quality + 1; }
+                    if (item.sellIn < 6)  { item.quality = item.quality + 1; }
                 }
             }
 
             item.sellIn = item.sellIn - 1;
 
-            if (item.sellIn < 0) {
-                if (!item.name.equals("Aged Brie")) {
-                    if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (item.quality > 0) {
-                            item.quality = item.quality - 1;
-                        }
-                    } else {
-                        item.quality = item.quality - item.quality;
-                    }
+            if (pastSellBy(item)) {
+                if(backstage(item)) {
+                    item.quality = 0;
+                    continue;
+                }
+
+                if (maturing(item)) {
+                    item.quality = item.quality + 1;
                 } else {
-                    if (item.quality < 50) {
-                        item.quality = item.quality + 1;
-                    }
+                    item.quality = item.quality - 1;
                 }
             }
+            if (item.quality < 0)  { item.quality = 0;  }
+            if (item.quality > 50) { item.quality = 50; }
         }
+    }
+
+    private boolean backstage(Item item) {
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private boolean pastSellBy(Item item) {
+        return item.sellIn < 0;
+    }
+
+    private boolean degrading(Item item) {
+        return !maturing(item) && !backstage(item);
+    }
+
+    private boolean maturing(Item item) {
+        return item.name.equals("Aged Brie");
     }
 
     private boolean isLegendary(Item item) {
