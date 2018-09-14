@@ -1,0 +1,50 @@
+package com.gildedrose;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
+
+public class JunitApprovalTest {
+    @Test
+    public void matchesInitialRun() throws Exception {
+        InputStream inputStream = getClass().getResourceAsStream("/TextRunResults.txt");
+        String original = new BufferedReader(new InputStreamReader(inputStream)).lines().collect(Collectors.joining("\n"));
+
+        StringBuffer result = new StringBuffer();
+        result.append("OMGHAI!\n");
+        Item[] items = new Item[] {
+                new Item("+5 Dexterity Vest", 10, 20), //
+                new Item("Aged Brie", 2, 0), //
+                new Item("Elixir of the Mongoose", 5, 7), //
+                new Item("Sulfuras, Hand of Ragnaros", 0, 80), //
+                new Item("Sulfuras, Hand of Ragnaros", -1, 80),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+                new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49),
+                // this conjured item does not work properly yet
+                new Item("Conjured Mana Cake", 3, 6) };
+
+        GildedRose app = new GildedRose(items);
+
+        int days = 30;
+
+        for (int i = 0; i < days; i++) {
+            result.append("-------- day " + i + " --------\n");
+            result.append("name, sellIn, quality\n");
+            for (Item item : items) {
+                result.append(item).append("\n");
+            }
+            result.append("\n");
+            app.updateQuality();
+        }
+        assertThat(result.toString(), is(equalTo(original)));
+    }
+}
