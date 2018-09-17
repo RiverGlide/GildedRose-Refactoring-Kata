@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class JunitApprovalTest {
+public class GildedRoseApprovalTest {
     @Test
     public void matchesInitialRun() throws Exception {
         InputStream inputStream = getClass().getResourceAsStream("/TextRunResults.txt");
