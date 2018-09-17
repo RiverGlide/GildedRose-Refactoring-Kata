@@ -10,24 +10,7 @@ public class GildedRoseItem {
     public void updateQuality() {
         decreaseSellBy();
 
-        if (degrading(item)) {
-            decreaseQualityBy(pastSellBy(item) ? 2 : 1);
-        } else {
-            increaseQualityBy(1);
-            if (backstage(item)) {
-                if (item.sellIn < 10) { increaseQualityBy(1); }
-                if (item.sellIn < 5)  { increaseQualityBy(1); }
-                if (pastSellBy(item)) { item.quality = 0; }
-            }
-        }
-    }
-
-    private boolean backstage(Item item) {
-        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
-    }
-
-    protected boolean pastSellBy(Item item) {
-        return item.sellIn < 0;
+        decreaseQualityBy(pastSellBy() ? 2 : 1);
     }
 
     protected void decreaseSellBy() {
@@ -35,11 +18,11 @@ public class GildedRoseItem {
     }
 
     protected boolean pastSellBy() {
-        return pastSellBy(item);
+        return item.sellIn < 0;
     }
 
-    private boolean degrading(Item item) {
-        return !backstage(item);
+    protected int daysLeft() {
+        return item.sellIn;
     }
 
     protected void increaseQualityBy(int i) {
@@ -50,5 +33,9 @@ public class GildedRoseItem {
     protected void decreaseQualityBy(int i) {
         item.quality -= i;
         if(item.quality < 0) { item.quality = 0; }
+    }
+
+    protected void noQuality() {
+        item.quality = 0;
     }
 }
