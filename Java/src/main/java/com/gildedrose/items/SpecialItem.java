@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 
-public @interface GildedRoseItem {
+public @interface SpecialItem {
     String name();
 }

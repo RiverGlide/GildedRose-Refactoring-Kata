@@ -6,15 +6,15 @@ import java.util.stream.Stream;
 
 class GildedRose {
     Item[] items;
-    private final List<WrappedItem> wrappedItems;
+    private final List<GildedRoseItem> gildedRoseItems;
 
     public GildedRose(Item[] items) {
         this.items = items;
-        wrappedItems = Stream.of(items).map(WrappedItem::new).collect(Collectors.toList());
+        gildedRoseItems = Stream.of(items).map(GildedRoseItem::new).collect(Collectors.toList());
     }
 
     public void updateQuality() {
-        for(WrappedItem item : wrappedItems) {
+        for(GildedRoseItem item : gildedRoseItems) {
             item.updateQuality();
         }
     }

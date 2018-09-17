@@ -1,9 +1,9 @@
 package com.gildedrose;
 
-public class WrappedItem {
+public class GildedRoseItem {
     private final Item item;
 
-    public WrappedItem(Item item) {
+    public GildedRoseItem(Item item) {
         this.item = item;
     }
 
