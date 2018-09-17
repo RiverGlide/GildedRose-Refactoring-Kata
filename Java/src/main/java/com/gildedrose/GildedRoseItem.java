@@ -8,8 +8,6 @@ public class GildedRoseItem {
     }
 
     public void updateQuality() {
-        if(isLegendary(item)) { return; }
-
         item.sellIn = item.sellIn - 1;
 
         if (degrading(item)) {
@@ -40,9 +38,5 @@ public class GildedRoseItem {
 
     private boolean maturing(Item item) {
         return item.name.equals("Aged Brie");
-    }
-
-    private boolean isLegendary(Item item) {
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 }
