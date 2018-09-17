@@ -7,9 +7,12 @@ public class GildedRoseItem {
         this.item = item;
     }
 
-    public void updateQuality() {
+    public void updateSellByAndQuality() {
         decreaseSellBy();
+        updateQuality();
+    }
 
+    public void updateQuality() {
         decreaseQualityBy(pastSellBy() ? 2 : 1);
     }
 

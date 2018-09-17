@@ -11,8 +11,6 @@ public class BackstageItem extends GildedRoseItem {
 
     @Override
     public void updateQuality() {
-        decreaseSellBy();
-
         increaseQualityBy(1);
         if (daysLeft() < 10) { increaseQualityBy(1); }
         if (daysLeft() < 5)  { increaseQualityBy(1); }

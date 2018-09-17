@@ -11,7 +11,6 @@ public class MaturingItem extends GildedRoseItem {
 
     @Override
     public void updateQuality() {
-        decreaseSellBy();
         increaseQualityBy(pastSellBy() ? 2 : 1);
     }
 }

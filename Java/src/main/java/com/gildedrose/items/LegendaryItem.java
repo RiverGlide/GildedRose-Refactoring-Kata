@@ -13,4 +13,8 @@ public class LegendaryItem extends GildedRoseItem {
     public void updateQuality() {
         // do nothing
     }
+
+    public void decreaseSellBy() {
+        //do nothing
+    }
 }

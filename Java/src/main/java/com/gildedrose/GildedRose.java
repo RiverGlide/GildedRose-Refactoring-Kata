@@ -17,7 +17,7 @@ class GildedRose {
 
     public void updateQuality() {
         for(GildedRoseItem item : gildedRoseItems) {
-            item.updateQuality();
+            item.updateSellByAndQuality();
         }
     }
 }
