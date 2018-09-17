@@ -8,35 +8,47 @@ public class GildedRoseItem {
     }
 
     public void updateQuality() {
-        item.sellIn = item.sellIn - 1;
+        decreaseSellBy();
 
         if (degrading(item)) {
-            item.quality = item.quality - (!pastSellBy(item) ? 1 : 2);
+            decreaseQualityBy(pastSellBy(item) ? 2 : 1);
         } else {
-            item.quality = item.quality + (!pastSellBy(item) ? 1 : 2);
+            increaseQualityBy(1);
             if (backstage(item)) {
-                if (item.sellIn < 10) { item.quality = item.quality + 1; }
-                if (item.sellIn < 5)  { item.quality = item.quality + 1; }
+                if (item.sellIn < 10) { increaseQualityBy(1); }
+                if (item.sellIn < 5)  { increaseQualityBy(1); }
                 if (pastSellBy(item)) { item.quality = 0; }
             }
         }
-        if (item.quality < 0)  { item.quality = 0;  }
-        if (item.quality > 50) { item.quality = 50; }
     }
 
     private boolean backstage(Item item) {
         return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
     }
 
-    private boolean pastSellBy(Item item) {
+    protected boolean pastSellBy(Item item) {
         return item.sellIn < 0;
     }
 
-    private boolean degrading(Item item) {
-        return !maturing(item) && !backstage(item);
+    protected void decreaseSellBy() {
+        item.sellIn--;
     }
 
-    private boolean maturing(Item item) {
-        return item.name.equals("Aged Brie");
+    protected boolean pastSellBy() {
+        return pastSellBy(item);
+    }
+
+    private boolean degrading(Item item) {
+        return !backstage(item);
+    }
+
+    protected void increaseQualityBy(int i) {
+        item.quality += i;
+        if(item.quality > 50 ) { item.quality = 50; }
+    }
+
+    protected void decreaseQualityBy(int i) {
+        item.quality -= i;
+        if(item.quality < 0) { item.quality = 0; }
     }
 }
