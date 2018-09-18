@@ -5,10 +5,15 @@ import com.gildedrose.GildedRoseItem;
 import org.reflections.Reflections;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Stream;
 
-public class LookupItem {
+import static java.util.stream.Collectors.toList;
+
+public class WrapAllItems {
     private static HashMap<String,Class<?>> annotatedClasses = null;
-    public static GildedRoseItem byName(Item item) {
+
+    public static GildedRoseItem byItemName(Item item) {
         if(annotatedClasses == null) { annotatedClasses = findAnnotatedClasses(); }
 
         Class<?> classToCreate = annotatedClasses.getOrDefault(item.name, GildedRoseItem.class);
@@ -28,5 +33,11 @@ public class LookupItem {
         }
 
         return result;
+    }
+
+    public static List<GildedRoseItem> wrapped(Item[] items) {
+        return Stream.of(items)
+                .map(WrapAllItems::byItemName)
+                .collect(toList());
     }
 }

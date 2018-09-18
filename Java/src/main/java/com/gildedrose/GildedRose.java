@@ -1,10 +1,10 @@
 package com.gildedrose;
 
-import com.gildedrose.items.LookupItem;
+import com.gildedrose.items.WrapAllItems;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static com.gildedrose.items.WrapAllItems.wrapped;
 
 class GildedRose {
     Item[] items;
@@ -12,7 +12,7 @@ class GildedRose {
 
     public GildedRose(Item[] items) {
         this.items = items;
-        gildedRoseItems = Stream.of(items).map(LookupItem::byName).collect(Collectors.toList());
+        gildedRoseItems = wrapped(items);
     }
 
     public void updateQuality() {
