@@ -13,15 +13,28 @@ import static java.util.stream.Collectors.toList;
 public class WrapAllItems {
     private static HashMap<String,Class<?>> annotatedClasses = null;
 
-    public static GildedRoseItem byItemName(Item item) {
-        if(annotatedClasses == null) { annotatedClasses = findAnnotatedClasses(); }
+    public static List<GildedRoseItem> wrapped(Item[] items) {
+        return Stream.of(items)
+                .map(WrapAllItems::byItemName)
+                .collect(toList());
+    }
 
-        Class<?> classToCreate = annotatedClasses.getOrDefault(item.name, GildedRoseItem.class);
+    public static GildedRoseItem byItemName(Item item) {
+        return createFrom(classOf(item), item);
+    }
+
+    private static GildedRoseItem createFrom(Class<?> classOfItem, Item item) {
         try {
-            return (GildedRoseItem) classToCreate.getConstructor(Item.class).newInstance(item);
+            return (GildedRoseItem) classOfItem.getConstructor(Item.class).newInstance(item);
         } catch (Exception e) {
             throw new RuntimeException("TODO - We don't handle this yet", e);
         }
+    }
+
+    private static Class<?> classOf(Item item) {
+        if(annotatedClasses == null) { annotatedClasses = findAnnotatedClasses(); }
+
+        return annotatedClasses.getOrDefault(item.name, GildedRoseItem.class);
     }
 
     private static HashMap<String, Class<?>> findAnnotatedClasses() {
@@ -33,11 +46,5 @@ public class WrapAllItems {
         }
 
         return result;
-    }
-
-    public static List<GildedRoseItem> wrapped(Item[] items) {
-        return Stream.of(items)
-                .map(WrapAllItems::byItemName)
-                .collect(toList());
     }
 }
