@@ -1,7 +1,7 @@
 package com.gildedrose.items;
 
-import com.gildedrose.Item;
 import com.gildedrose.GildedRoseItem;
+import com.gildedrose.Item;
 
 @SpecialItem(name = "Sulfuras, Hand of Ragnaros")
 public class LegendaryItem extends GildedRoseItem {

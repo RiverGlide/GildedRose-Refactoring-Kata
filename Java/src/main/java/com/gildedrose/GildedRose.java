@@ -1,7 +1,5 @@
 package com.gildedrose;
 
-import com.gildedrose.items.WrapAllItems;
-
 import java.util.List;
 
 import static com.gildedrose.items.WrapAllItems.wrapped;

@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.function.Function;
+
 public class GildedRoseItem {
     private final Item item;
 
@@ -13,7 +15,23 @@ public class GildedRoseItem {
     }
 
     public void updateQuality() {
-        decreaseQualityBy(pastSellBy() ? 2 : 1);
+        if(pastSellBy()) {
+            item.quality = afterSellBy().apply(item.quality);
+        }
+        else {
+            item.quality = beforeSellBy().apply(item.quality);
+        }
+
+        if(item.quality < 0)  { item.quality = 0;  }
+        if(item.quality > 50) { item.quality = 50; }
+    }
+
+    public Function<Integer, Integer> beforeSellBy() {
+        return (quality) -> quality - 1;
+    }
+
+    public Function<Integer, Integer> afterSellBy() {
+        return (quality) -> quality - 2;
     }
 
     protected void decreaseSellBy() {
@@ -26,19 +44,5 @@ public class GildedRoseItem {
 
     protected int daysLeft() {
         return item.sellIn;
-    }
-
-    protected void increaseQualityBy(int i) {
-        item.quality += i;
-        if(item.quality > 50 ) { item.quality = 50; }
-    }
-
-    protected void decreaseQualityBy(int i) {
-        item.quality -= i;
-        if(item.quality < 0) { item.quality = 0; }
-    }
-
-    protected void noQuality() {
-        item.quality = 0;
     }
 }

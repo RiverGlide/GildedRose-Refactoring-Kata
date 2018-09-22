@@ -1,16 +1,13 @@
 package com.gildedrose;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class GildedRoseApprovalTest {
     @Test
@@ -45,6 +42,6 @@ public class GildedRoseApprovalTest {
             result.append("\n");
             app.updateQuality();
         }
-        assertThat(result.toString(), is(equalTo(original)));
+        assertEquals(result.toString(), original);
     }
 }
